@@ -24,8 +24,16 @@ nav:
                   - lec4
                   - lec5
     - Tools
+    - 数理:
+        - 电工电子学及实验: 
+                - lec1
+                # - lec2
+                # - lec3
+                # - lec4
+                # - lec5
 icon:
     predoc: code
     Misc: github
     CS_related: flag
-    Tools: wrench
+    数理: flag
+#     Tools: wrench

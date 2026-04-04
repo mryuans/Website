@@ -1,1 +1,0 @@
-import{d as n,e as o,f as t,F as r,o as a,p}from"./index-CnQXsKRk.js";import"./vendor-katex-BDPLvt6s.js";const d=n({__name:"temp",setup(s){return p("katex-macros",{}),(l,e)=>(a(),o(r,null,[e[0]||(e[0]=t("p",null,"本文将着重介绍插件中的enrty类",-1)),e[1]||(e[1]=t("p",null,"##类属性",-1))],64))}});export{d as default};

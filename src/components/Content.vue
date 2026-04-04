@@ -59,13 +59,13 @@ onMounted(scrollToAnchor);
 </script>
 
 <template>
-    <Hero v-if="route.path === '/'" />
-    <div id="content" :style="{ marginTop: route.path === '/' ? '100vh' : '0' }">
-        <header v-if="route.path !== '/'">
+    <Hero v-if="meta.attr.layout === 'home'" />
+    <div id="content" :style="{ marginTop: meta.attr.layout === 'home' ? '100vh' : '0' }">
+        <header v-if="meta.attr.layout !== 'home'">
             <h1>{{ meta.attr.displayTitle ?? meta.attr.title }}</h1>
         </header>
 
-            <Metadata v-if="route.path !== '/'"
+            <Metadata v-if="meta.attr.layout !== 'home'"
                 :breadcrumb="meta.breadcrumb"
                 :type="meta.type"
                 :key="meta.pathname"

@@ -1,0 +1,1 @@
+import{I as e}from"./Index-qVhBBUSD.js";import{d as o,o as r,c as t,p as a}from"./index-BWOvinVT.js";import"./vendor-katex-BDPLvt6s.js";const d=o({__name:"index",setup(n){return a("katex-macros",{}),(p,s)=>(r(),t(e,{target:"/CS_related"}))}});export{d as default};

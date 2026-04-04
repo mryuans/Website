@@ -1,6 +1,7 @@
 ---
 title: 主页
 displayTitle: Personal Doc
+layout: home
 ---
 
 ::fold{expand always title="注意" warning}
@@ -34,6 +35,6 @@ displayTitle: Personal Doc
 
 ::
 
-**QuickCheck**
+<!-- **QuickCheck**
 
-:index
+:index -->

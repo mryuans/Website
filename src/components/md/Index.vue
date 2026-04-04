@@ -65,11 +65,11 @@ const leaves: Ref<NavNode[]> = computed(() => leaf_nodes(root.value));
                     class="icon"
                     :title="category_title(leaf)"
                 >
-                    <font-awesome-icon v-if="brandName.includes(config.icon[meta_of(leaf).category])"
-                        :icon="['fab', config.icon[meta_of(leaf).category]]"
+                    <font-awesome-icon v-if="brandName.includes(config.icon[meta_of(leaf).category] || 'folder')"
+                        :icon="['fab', config.icon[meta_of(leaf).category] || 'folder']"
                     />
                     <font-awesome-icon v-else
-                        :icon="['fas', config.icon[meta_of(leaf).category]]"
+                        :icon="['fas', config.icon[meta_of(leaf).category] || 'folder']"
                     />
                 </router-link>
             </div>

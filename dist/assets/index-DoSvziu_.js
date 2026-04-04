@@ -1,0 +1,1 @@
+import{I as e}from"./Index-qVhBBUSD.js";import{d as o,o as a,c as r,p as t}from"./index-BWOvinVT.js";import"./vendor-katex-BDPLvt6s.js";const d=o({__name:"index",setup(n){return t("katex-macros",{}),(s,p)=>(a(),r(e,{target:"/predoc/markdown_analysis"}))}});export{d as default};
