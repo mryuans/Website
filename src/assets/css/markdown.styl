@@ -1,0 +1,429 @@
+@import "global.styl"
+
+// @todo 完善标点挤压（写 js 脚本，临时用 font-feature-settings: "halt" 解决）
+
+dualr(--block-extend, -0.5rem, -1rem);
+
+schemer(--hr-color, lighten(black, 82%), lighten(black, 50%));
+schemer(--bold-color, darken($theme-color, 20%), $theme-color);
+
+schemer(--checkbox-background, none, #cecece);
+schemer(--checkbox-background-checked, #56a0ef, #2f77c4);
+
+schemer(--blockquote-border, blend(alpha(#000, 0.15), $background-light), blend(alpha(#fff, 0.4), $background-dark));
+schemer(--blockquote-background, blend(alpha(#000, 0.05), $background-light), blend(alpha(#fff, 0.12), $background-dark));
+schemer(--blockquote-text, lighten($text-color, 28%), darken($text-color-d, 10%));
+
+schemer(--inline-code-background, blend(alpha(#000, 0.08), $background-light), blend(alpha(#fff, 0.15), $background-dark));
+
+schemer(--block-code-background, #fafafa, #1b1c1d);
+schemer(--block-code-border, blend(alpha(#000, 0.07), $background-light), blend(alpha(#fff, 0.2), $background-dark));
+schemer(--block-code-text, #383a42, #c1c4d1);
+
+schemer(--list-marker-color, lighten($text-color, 10%), darken($text-color-d, 7%));
+
+schemer(--table-border, lighten(black, 89%), lighten(black, 25%));
+schemer(--table-hover-background, blend(alpha(#000, 0.04), $background-light), blend(alpha(#fff, 0.04), $background-dark));
+
+schemer(--quote-color, lighten($text-color, 24%), darken($text-color-d, 5%));
+schemer(--quote-background-opacity, 0.35, 0.5);
+schemer(--quote-background-invert, 0, 1);
+
+.markdown
+    /* 基础样式 */
+    line-height: 1.73em;
+    font-size: 1.06rem;
+    // font-feature-settings: "halt";
+
+    /* 段落 */
+    p
+        margin-top: 1em;
+        margin-bottom: 1em;
+        overflow-wrap: break-word;
+
+    /* KaTeX 数学公式 */
+    .katex
+        font-size: 1.02em;
+
+        .cjk_fallback
+            font-family: $font-family;
+
+    .katex-display
+        margin: 0.3em 2px;
+
+    /* header 标签（h1被ban掉了） */
+    h2
+        font-size: 1.6rem;
+        line-height: 2.6rem;
+
+    h3
+        font-size: 1.4rem;
+        line-height: 1.75rem;
+
+    h4
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+
+    h5
+        font-size: 1rem;
+        line-height: 1.5rem;
+
+    h6
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+
+    /* hr 标签 */
+    hr
+        margin: 3.2rem auto;
+        width: 16rem;
+        max-width: 80%;
+        height: 1px;
+        background-color: var(--hr-color);
+
+    /* strong 标签 */
+    strong
+        font-weight: bold;
+        color: var(--bold-color);
+
+    .heading strong
+        color: unset;
+    
+    figure strong
+        color: unset;
+
+    /* span.right 标签 */
+    span.right
+        display: block;
+        text-align: right;
+
+    /* em 标签 */
+    em
+        font-style: italic;
+
+    /* 列表 */
+    ul
+        list-style: disc;
+
+    ol
+        list-style: decimal;
+
+    :is(ul, ol)
+        margin-left: 20px;
+
+    :is(ul, ol) li
+        padding-left: 5px;
+        line-height: 2.5em;
+
+    :is(ul, ol) li::marker
+        color: var(--list-marker-color);
+
+    /* checkbox */
+    /* @see https://getcssscan.com/css-checkboxes-examples */
+    /* @see https://github.com/linsir/markdown-it-task-checkbox */
+    ul.task-list
+        margin-left: unset;
+        list-style: none;
+
+        li
+            text-indent: unset;
+
+    .task-list-item
+        *, ::after, ::before
+            box-sizing: border-box;
+
+        input[type="checkbox"]
+            margin: 0;
+            width: 0;
+            height: 0;
+            display: inline;
+            appearance: none;
+
+            + label:before
+                content: "";
+                display: inline-block;
+                vertical-align: sub;
+                height: 1em;
+                width: 1em;
+                margin-right: 0.6em;
+                margin-bottom: 1.5px;
+                color: #00000046;
+                border: 0.06em solid;
+                border-radius: 0.2em;
+                background: "url(%s) no-repeat center, white" % $checkbox-svg;
+                background-color: var(--checkbox-background);
+                background-size: 0;
+
+            &:checked + label:before
+                background-color: var(--checkbox-background-checked);
+                background-size: 0.75em;
+                color: #00000013;
+
+    /* 引言 */
+    blockquote
+        margin: 0.8em 0;
+        padding: 0.2em 1em;
+        border-left: 4px solid var(--blockquote-border);
+        background-color: var(--blockquote-background);
+        color: var(--blockquote-text);
+        border-radius: 4px;
+        font-size: 0.96em;
+
+    > blockquote
+        margin-left: var(--block-extend);
+        margin-right: var(--block-extend);
+
+    /* 行内代码块 */
+    code.inline-code
+        font-family: $monospace;
+        background: var(--inline-code-background);
+        border-radius: 5px;
+        white-space: normal;
+        font-size: 0.86em;
+        line-height: 1em;
+        padding: 0.15em 0.3em;
+        word-break: break-word;
+    
+    .note .content code.inline-code,
+    .fold .header code.inline-code
+        background: var(--content-code-color);
+
+    /* 行间代码块 */
+    pre.block-code
+        background: var(--block-code-background);
+        border: 1px solid var(--block-code-border);
+        padding: 1em 0.8em;
+        margin: 1em var(--block-extend);
+        border-radius: 5px;
+        color: var(--block-code-text);
+        font-family: $monospace;
+        font-size: 0.93em;
+        overflow: auto;
+        word-spacing: normal;
+        word-break: normal;
+        line-height: 1.55;
+        tab-size: 2;
+
+        code
+            background: unset;
+            white-space: pre !important;
+            padding: 0.2em 0;
+            text-shadow: none;
+
+        ::selection
+            background-color: alpha($theme-color, 0.25);
+
+    /* 表格 */
+    table
+        border-collapse: collapse;
+        border: 1px solid var(--table-border);
+        border-radius: 2px;
+        display: block;
+        width: max-content;
+        margin: 1.5em auto;
+        max-width: calc(100% - var(--block-extend) * 2);
+        transform: translateX(var(--block-extend));
+        overflow-x: auto;
+
+        th
+            font-weight: bold;
+            padding: 0.6em 0.5em;
+            text-align: unset;
+            min-width: 5em;
+
+        td
+            padding: 0.6em 0.5em;
+            border-top: 1px solid var(--table-border);
+
+        tbody tr
+            transition: background-color 0.05s;
+
+            &:hover
+                background-color: var(--table-hover-background);
+
+    /* Snippet Quote */
+    div.quote
+        display: block;
+        margin: 4.5em 0;
+        padding: 0 3rem;
+        color: var(--quote-color);
+        text-align: center;
+        position: relative;
+
+        &::before, &::after
+            position: absolute;
+            display: block;
+            height: 1.5em;
+            width: 100%;
+            margin: 0 -3rem;
+            background-repeat: no-repeat;
+            background-size: 22px 22px;
+            content: "";
+            opacity: var(--quote-background-opacity);
+            filter: invert(var(--quote-background-invert));
+
+        &::before
+            top: -1.25em;
+            background-image: url(@/assets/img/quote-left.svg);
+            background-position: 0 -4px;
+
+        &::after
+            bottom: -1.25em;
+            background-image: url(@/assets/img/quote-right.svg);
+            background-position: 100% 7px;
+
+    /* FontAwesome icons */
+    svg.icon
+        padding: 0 0.2em;
+        font-size: 0.9em;
+        opacity: 0.85;
+
+    /* div.asterisk 标签 */
+    div.asterisk::after
+        content: "＊＊＊";
+        text-align: center;
+        color: lighten(black, 60%);
+        font-size: 0.75em;
+        margin: 4rem 0;
+        letter-spacing: 6px;
+        user-select: none;
+        display: block;
+    
+    /* span.waving 标签 */
+    span.waving
+        display: inline-block;
+        margin-right: 0.1em;
+        animation: waving 1.7s infinite ease-in-out;
+        transform-origin: 70% 60%;
+
+        &::before
+            margin-bottom: -0.2em;
+            width: 1.1em;
+            height: 1.1em;
+            content: "";
+            display: inline-block;
+            background: url(@/assets/img/waving.png) no-repeat;
+            background-size: 100%;
+
+    /* span.home-links 标签 */
+    span.home-links
+        display: flex;
+        justify-content: center;
+        font-size: 0.9em;
+
+        a
+            color: unset;
+            opacity: 0.8;
+            text-decoration: none;
+
+            &:hover
+                color: var(--color);
+
+            &:not(:last-child)::after
+                display: inline-block;
+                content: "";
+                width: 1px;
+                height: 0.7em;
+                background-color: lighten(black, 50%);
+                margin: 0 0.5em;
+
+    /* .fold.fold-fontawesome-list 标签 */
+    .fold.fold-fontawesome-list
+        .fold-height-listener
+            p
+                margin-top: 0.8em;
+                margin-bottom: 0.8em;
+            svg
+                width: 1.3rem;
+                margin-left: -0.2rem; // To eat &nbsp;
+
+    /* .fold.home-recent-updates 标签 */
+    .fold.home-recent-updates
+        .fold-height-listener
+            p
+                text-wrap: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+
+            a
+                color: unset;
+                text-decoration: none;
+
+                &:hover
+                    color: var(--color);
+    
+    /* .home-grid 标签 */
+    .home-grid .fold
+        .fold-height-listener
+            dual(--wrapper-padding, 0.8em 1.4em, 0.2em 0.9em);
+
+    /* .und 标签 */
+    .und
+        text-decoration: underline 0.7pt;
+        text-underline-offset: 2px;
+
+
+/* Animation */
+@keyframes waving
+    0%, 100%
+        transform: rotate(-10deg);
+    50%
+        transform: rotate(10deg);
+
+/* Note & Fold color theme */
+$types = "default" "info" "success" "warning" "danger"
+$themes = #777777 #0070f3 #0fdb9d #f5a623 #ee0000
+$alphas = 0.20 0.67 0.11 0.20
+$dkAlphas = 0.14 0.9 0.14 0.22
+
+for $c, $i in $themes
+    .colors.{$types[$i]}
+        scheme(--background-color, blend(alpha($c, $alphas[0]), $background-light), blend(alpha($c, $dkAlphas[0]), $background-dark));
+        scheme(--icon-color, blend(alpha($c, $alphas[1]), $background-light), blend(alpha($c, $dkAlphas[1]), $background-dark));
+        scheme(--content-code-color, blend(alpha($c, $alphas[2]), $background-light), blend(alpha($c, $dkAlphas[2]), $background-dark));
+        scheme(--border-color, blend(alpha($c, $alphas[3]), $background-light), blend(alpha($c, $dkAlphas[3]), $background-dark));
+
+@media (max-width: 768px)
+    /* KaTeX 数学公式 */
+    .markdown
+        .katex
+            font-size: 1em;
+
+        .katex-display .katex
+            font-size: 1rem;
+
+        /* header 标签 */
+        h2
+            font-size: 1.5rem;
+            line-height: 2.6rem;
+
+        h3
+            font-size: 1.35rem;
+
+        h4
+            font-size: 1.025rem;
+
+        h5
+            font-size: 0.9rem;
+            line-height: 1.5rem;
+
+        h6
+            font-size: 0.8rem;
+
+        /* hr 标签 */
+        hr
+            width: 12rem;
+
+        /* 引言 */
+        blockquote
+            padding: 0.3rem 0.9rem;
+
+        /* 表格 */
+        table tbody tr:hover
+            background-color: unset;
+
+        /* Snippet Quote */
+        div.quote
+            padding: 0 2rem
+
+            &::before, &::after
+                margin: 0 -2rem;

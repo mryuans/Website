@@ -1,0 +1,31 @@
+nav:
+    - predoc:
+            - UserGuide:
+                        - mainStructure
+                        - websiteGuide
+            - markdown_analysis:
+                        - markdown-it
+                        - MarkdownInterfaces
+            - cache:
+                    - GlobalInterfaces
+                    - ConventionInterfaces
+            - entry:
+                    - EntryClass
+                    - EntryTypes
+            - component:
+                        - PluginOptions
+    - Misc: 
+            - CustomGrammer
+    - CS_related:
+            - Cryptography:
+                  - lec1
+                  - lec2
+                  - lec3
+                  - lec4
+                  - lec5
+    - Tools
+icon:
+    predoc: code
+    Misc: github
+    CS_related: flag
+    Tools: wrench

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D Penrose Staircase - Perfect Draw Lines</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #000; display: flex; align-items: center; justify-content: center; }
+        canvas { display: block; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+<script>
+    // ==========================================
+    // 1. 场景与正交相机
+    // ==========================================
+    const scene = new THREE.Scene();
+    const aspect = window.innerWidth / window.innerHeight;
+    const d = 12; 
+    const camera = new THREE.OrthographicCamera(-d * aspect, d * aspect, d, -d, 1, 1000);
+    camera.position.set(0, 0, 50); 
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio); 
+    document.body.appendChild(renderer.domElement);
+
+    // ==========================================
+    // 2. 光影
+    // ==========================================
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight.position.set(10, 20, 10);
+    scene.add(dirLight);
+
+    // ==========================================
+    // 3. 构建模型 (【核心修改】：放弃虚线，改用普通线条+绘制范围控制)
+    // ==========================================
+    const group = new THREE.Group();
+    const blockSize = 1.2;
+    const numBlocks = 5; 
+    const blocks = [];
+    const edges = [];
+
+    function createBlock(x, y, z) {
+        const geo = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
+        
+        // 实体材质 (初始透明)
+        const mat = new THREE.MeshLambertMaterial({
+            color: 0xeef6ff, 
+            transparent: true,
+            opacity: 0 
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.set(x * blockSize, y * blockSize, z * blockSize);
+        group.add(mesh);
+        blocks.push(mesh);
+
+        // 线框材质 (改为普通的 LineBasicMaterial)
+        const edgesGeo = new THREE.EdgesGeometry(geo);
+        const edgesMat = new THREE.LineBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 1 
+        });
+        const line = new THREE.LineSegments(edgesGeo, edgesMat);
+        
+        // 【关键修复】：一上来直接把绘制顶点数设为 0，绝对隐藏！
+        // 一个 Box 的 EdgesGeometry 固定有 24 个顶点 (12条边 * 2个端点)
+        line.geometry.setDrawRange(0, 0); 
+        // 绑定一个自定义属性，用来给 GSAP 做动画
+        line.userData = { drawCount: 0 }; 
+
+        mesh.add(line);
+        edges.push(line);
+    }
+
+    // 绘制 U 型路径
+    for (let i = 0; i < numBlocks; i++) createBlock(i, 0, 0); 
+    for (let i = 1; i < numBlocks; i++) createBlock(numBlocks - 1, i, 0); 
+    for (let i = 1; i < numBlocks; i++) createBlock(numBlocks - 1, numBlocks - 1, i); 
+
+    const offset = ((numBlocks - 1) * blockSize) / 2;
+    group.position.set(-offset, -offset, -offset);
+
+    const wrapper = new THREE.Group();
+    wrapper.add(group);
+    scene.add(wrapper);
+
+    wrapper.rotation.order = 'YXZ';
+    // 初始倾斜视角
+    // wrapper.rotation.set(Math.PI / 6, Math.PI / 4, 0); 
+
+    // ==========================================
+    // 4. GSAP 动画编排 (慢-快-慢)
+    // ==========================================
+    const easeType = "power2.inOut"; 
+    const tl = gsap.timeline({ delay: 0.5 }); 
+
+    // Step 1: DrawTheBroader (真正意义上的描摹骨架)
+    tl.to(edges.map(e => e.userData), {
+        drawCount: 24, // 动画将顶点数从 0 增加到 24
+        duration: 2.5,
+        ease: easeType,
+        stagger: { each: 0.1, from: "start" },
+        onUpdate: () => {
+            // 在每一帧更新时，将计算出的数字应用到真实的渲染范围上
+            edges.forEach(line => {
+                // 因为是线段(2个点连成1条线)，必须保证是偶数
+                const currentCount = Math.floor(line.userData.drawCount / 2) * 2;
+                line.geometry.setDrawRange(0, currentCount);
+            });
+        }
+    });
+
+    // Step 2: ThenFill (上色并隐去部分边框)
+    tl.to(blocks.map(b => b.material), {
+        opacity: 1,
+        duration: 1.5,
+        ease: easeType,
+        stagger: 0.05 
+    }, "-=1.5"); // 提前一点开始填色，衔接更紧密
+
+    tl.to(edges.map(e => e.material), { 
+        opacity: 0.2, 
+        duration: 1.5 
+    }, "<"); 
+
+    // Step 3: 旋转形成彭罗斯闭环
+    tl.to(wrapper.rotation, {
+        x: Math.atan(1 / Math.sqrt(2)), 
+        y: -Math.PI / 4,                
+        z: 0,                           
+        duration: 2.5,
+        ease: easeType
+    });
+
+    // Step 3.5: 旋转完成后，彻底去除白色线条
+    tl.to(edges.map(e => e.material), {
+        opacity: 0, 
+        duration: 1, 
+        ease: "sine.out" 
+    }, "+=0.2"); 
+
+    // Step 4: 边缩小边向左移动
+    tl.to(wrapper.position, {
+        x: -d * 0.4, 
+        duration: 2,
+        ease: easeType
+    }, "+=0.2"); 
+    tl.to(wrapper.scale, {
+        x: 0.6, y: 0.6, z: 0.6,
+        duration: 2,
+        ease: easeType
+    }, "<"); 
+
+    // Step 5: 轻微的上下运动 (无限悬浮)
+    tl.add(() => {
+        gsap.to(wrapper.position, {
+            y: "+=0.8", 
+            duration: 2,
+            ease: "sine.inOut", 
+            yoyo: true,         
+            repeat: -1          
+        });
+    });
+
+    // ==========================================
+    // 5. 渲染循环
+    // ==========================================
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+        const aspect = window.innerWidth / window.innerHeight;
+        camera.left = -d * aspect;
+        camera.right = d * aspect;
+        camera.top = d;
+        camera.bottom = -d;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+</script>
+</body>
+</html>

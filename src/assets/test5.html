@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>完美打字效果 - 衬线字体版</title>
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      html {
+        /* 保持你的优雅字体设置 */
+        font-family: "Libertinus Serif", serif;
+        font-style: italic;
+        font-size: 100px;
+      }
+      body {
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* 摒弃掉之前所有的 width 和 steps 动画，让文字自然排版 */
+      #animeText {
+        display: inline-block;
+        white-space: nowrap; 
+      }
+
+      #cursor {
+        /* 下划线光标往下靠一点，配合衬线字体的基线更好看 */
+        vertical-align: text-bottom;
+        animation: cursorBlink 1s infinite;
+      }
+
+      @keyframes cursorBlink {
+        0%, 100% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="animeText">
+      <span id="text"></span><span id="cursor">_</span>
+    </div>
+
+    <script>
+      // 我们想要打印的完整句子
+      const fullText = "Text typing animation.";
+      const textElement = document.getElementById('text');
+      
+      let index = 0;
+      // 算一下每个字的间隔时间：总时长 3 秒 (3000ms) / 23 个字符 ≈ 130ms
+      const speed = 130; 
+
+      function typeWriter() {
+        if (index < fullText.length) {
+          // 每次往 span 里面塞一个真实的字符
+          textElement.textContent += fullText.charAt(index);
+          index++;
+          setTimeout(typeWriter, speed);
+        }
+        // 当 index 等于长度时，函数不再调用自己，打字自然停止，但 CSS 控制的光标还在无限闪烁
+      }
+
+      // 页面加载后，稍微延迟 0.5 秒再开始打字，体验更好
+      setTimeout(typeWriter, 500);
+    </script>
+  </body>
+</html>
