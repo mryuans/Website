@@ -1,0 +1,3 @@
+[submodule "plugins/vite-plugin-vue-xecades-note"]
+	path = plugins/vite-plugin-vue-xecades-note
+	url = https://github.com/mryuans/vite-plugin-vue-xecades-note-custom.git

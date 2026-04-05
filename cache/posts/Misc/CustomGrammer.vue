@@ -80,6 +80,6 @@ const expr_13 = "    \\begin{aligned}\n        &\\text{HHH}=H\\times H^2\n\\\\\n
 <BlockMath :data="expr_13"></BlockMath></Fold>
 </Tab>
 <Heading :level=3 :id=5>well, How about let’s try some icon</Heading>
-<p><font-awesome-icon class="icon" icon="fa-solid fa-chevron-right" /> <font-awesome-icon class="icon" icon="fa-solid fa-chevron-left" /> <font-awesome-icon class="icon" icon="fa-solid fa-graduation-cap" /> <font-awesome-icon class="icon" icon="fa-solid fa-flag" /></p>
+<p> <font-awesome-icon class="icon" icon="fa-solid fa-chevron-right" /> <font-awesome-icon class="icon" icon="fa-solid fa-chevron-left" /> <font-awesome-icon class="icon" icon="fa-solid fa-graduation-cap" /> <font-awesome-icon class="icon" icon="fa-solid fa-flag" /></p>
 
 </template>

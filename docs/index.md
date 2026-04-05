@@ -35,6 +35,6 @@ layout: home
 
 ::
 
-<!-- **QuickCheck**
+**QuickCheck**
 
-:index -->
+:index

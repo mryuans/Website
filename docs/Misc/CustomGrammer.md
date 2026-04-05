@@ -83,7 +83,7 @@ $$
 ::
 
 ### well, How about let's try some icon
-:chevron-right: :chevron-left: :graduation-cap: :flag: 
+&nbsp;:chevron-right: :chevron-left: :graduation-cap: :flag: 
 
 
 

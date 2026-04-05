@@ -52,17 +52,17 @@ const expr_3 = <>最近更新</>;
 <Delimiter span="10" sm:span="24" />
 <Fold class="fold-fontawesome-list" type="default" :title="expr_2" :always="true" :expand="true">
 <p> <font-awesome-icon class="icon" icon="fa-solid fa-file-lines" /> 页面总数：34</p>
-<p> <font-awesome-icon class="icon" icon="fa-solid fa-pen-nib" /> 总词数：9326</p>
-<p> <font-awesome-icon class="icon" icon="fa-solid fa-calendar-days" /> 最后更新：{{ dayjs("2026-04-04T15:33:45+08:00").fromNow() }}</p>
+<p> <font-awesome-icon class="icon" icon="fa-solid fa-pen-nib" /> 总词数：10696</p>
+<p> <font-awesome-icon class="icon" icon="fa-solid fa-calendar-days" /> 最后更新：{{ dayjs("2026-04-04T22:46:48+08:00").fromNow() }}</p>
 </Fold>
 <Delimiter span="14" sm:span="24" />
 <Fold class="fold-fontawesome-list home-recent-updates" type="success" :title="expr_3" :always="true" :expand="true">
-<p> <font-awesome-icon class="icon" icon="fa-solid fa-a" /> <Anchor href="/数理/电工电子学及实验/lec1" title="更新于 2026-04-04 21:28:51 (UTC+8)">lec1</Anchor></p>
-<p> <font-awesome-icon class="icon" icon="fa-solid fa-b" /> <Anchor href="/CS_related/Cryptography/lec1" title="更新于 2026-04-04 15:33:45 (UTC+8)">lec1</Anchor></p>
-<p> <font-awesome-icon class="icon" icon="fa-solid fa-c" /> <Anchor href="/CS_related/Cryptography/lec2" title="更新于 2026-04-04 15:33:45 (UTC+8)">lec2</Anchor></p>
+<p> <font-awesome-icon class="icon" icon="fa-solid fa-a" /> <Anchor href="/CS_related/Cryptography/lec1" title="更新于 2026-04-04 22:46:48 (UTC+8)">lec1</Anchor></p>
+<p> <font-awesome-icon class="icon" icon="fa-solid fa-b" /> <Anchor href="/Tools" title="更新于 2026-04-04 22:46:48 (UTC+8)">Tools</Anchor></p>
+<p> <font-awesome-icon class="icon" icon="fa-solid fa-c" /> <Anchor href="/数理/电工电子学及实验/lec1" title="更新于 2026-04-04 22:46:48 (UTC+8)">lec1</Anchor></p>
 </Fold>
 </Grid>
-<!-- **QuickCheck**
+<p><strong>QuickCheck</strong></p>
+<Index target="/" />
 
-:index -->
 </template>
