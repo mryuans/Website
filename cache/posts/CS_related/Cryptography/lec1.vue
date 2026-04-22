@@ -44,7 +44,7 @@ $$ -->
 <BlockCode lang="c" :html="expr_1"></BlockCode><ol start="2">
 <li>乘法模逆元：</li>
 </ol>
-<p>若<InlineMath data="a*b≡1 (mod\ n)"></InlineMath>, 则称a是b的乘法模n逆元，b是a的乘法模n逆元。a的乘法逆元记作a-1</p>
+<p>若<InlineMath data="a*b≡1 (mod\ n)"></InlineMath>, 则称a是b的乘法模n逆元，b是a的乘法模n逆元。a的乘法逆元记作<InlineMath data="a^{-1}"></InlineMath></p>
 <p>需要注意的是，乘法逆元不一定存在，存在充要条件：
 已知<InlineMath data="a,n,a\ mod\ n"></InlineMath>的乘法逆元存在的充要条件是<InlineMath data="gcd(a,n)=1"></InlineMath>
 引入仿射加密：</p>
@@ -53,9 +53,11 @@ $$ -->
 <li>对于一个密码需要知道哪一个逆元是存在的</li>
 <li>在c中，%与mod是不同的，前者会存在负数的情况，如果需要mod，那么我们可以用如下等价操作</li>
 </ol>
-<BlockMath :data="expr_4"></BlockMath><p>     这种做法又被称作是完美带模减法.
-     类似地，存在完美带模加法，使得结果不超过模本身.
-3. 对于所有进行了以n为模的乘法的操作都需要注意加上%n的操作来保证结果不超过n</p>
+<BlockMath :data="expr_4"></BlockMath><p>     这种做法又被称作是完美带模减法.</p>
+<p>     类似地，存在完美带模加法，使得结果不超过模本身.</p>
+<ol start="3">
+<li>对于所有进行了以n为模的乘法的操作都需要注意加上%n的操作来保证结果不超过n</li>
+</ol>
 </Fold>
 
 </template>

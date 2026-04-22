@@ -1,0 +1,16 @@
+[
+  {
+    "file": "md5_sbox.c",
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-g",
+      "-I/opt/homebrew/Cellar/openssl@3/3.6.2/include",
+      "-o",
+      "md5_sbox",
+      "md5_sbox.c"
+    ],
+    "directory": "/Users/cengyi/work/personal-website-pre-version/docs/CS_related/Cryptography/assets",
+    "output": "md5_sbox"
+  }
+]
